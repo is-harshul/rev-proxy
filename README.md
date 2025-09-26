@@ -5,7 +5,7 @@ This script automates the process of adding and removing reverse proxy entries f
 ## 📁 Files Created
 
 - `add-proxy.sh` - Main script with full functionality ✅ **WORKING**
-- `PROXY_SCRIPT_README.md` - This documentation
+- `README.md` - This documentation
 
 ## ⚡ Quick Start
 
