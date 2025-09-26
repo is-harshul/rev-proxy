@@ -15,22 +15,22 @@ The alias `proxyBp` is already added to your `.zshrc`:
 
 ```bash
 # Add a staging URL
-proxyBp add zerodha-staging.smallcase.com
+add-proxy.sh add harshulkansal.staging.com
 
 # Add with custom port
-proxyBp add axisdirect-staging.smallcase.com 8005
+add-proxy.sh add harshulkansal.staging.com 8005
 
 # Remove a URL
-proxyBp remove zerodha-staging.smallcase.com
+add-proxy.sh remove harshulkansal.staging.com
 
 # List all entries
-proxyBp list
+add-proxy.sh list
 ```
 
 ### Direct Usage
 ```bash
-./add-proxy.sh add zerodha-staging.smallcase.com
-./add-proxy.sh remove zerodha-staging.smallcase.com
+./add-proxy.sh add harshulkansal.staging.com
+./add-proxy.sh remove harshulkansal.staging.com
 ./add-proxy.sh list
 ```
 
@@ -83,16 +83,16 @@ Backups are stored in `~/.proxy-backups/` with timestamps:
 
 ```bash
 # Add a staging URL (defaults to port 8004)
-proxyBp add zerodha-staging.smallcase.com
+add-proxy.sh add harshulkansal.staging.com
 
 # Add with custom port
-proxyBp add axisdirect-staging.smallcase.com 8005
+add-proxy.sh add harshulkansal.staging.com 8005
 
 # Remove a URL
-proxyBp remove zerodha-staging.smallcase.com
+add-proxy.sh remove harshulkansal.staging.com
 
 # List all entries
-proxyBp list
+add-proxy.sh list
 ```
 
 ## 🛠️ Troubleshooting
@@ -127,7 +127,7 @@ sudo /opt/homebrew/bin/nginx -s reload
 The script is now **100% working** and ready to use! You can start using it immediately with:
 
 ```bash
-proxyBp add your-staging-url.com
+add-proxy.sh add your-staging-url.com
 ```
 
 Enjoy your automated reverse proxy management! 🚀
