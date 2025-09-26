@@ -2,14 +2,18 @@
 
 # Script to add/remove reverse proxy entries for staging URLs
 # Usage: ./add-proxy.sh <action> <url> [port]
-# Actions: add, remove, list
+# Actions: setup, add, remove, list
+# Example: ./add-proxy.sh setup
 # Example: ./add-proxy.sh add zerodha-staging.smallcase.com
 # Example: ./add-proxy.sh remove zerodha-staging.smallcase.com
 # Example: ./add-proxy.sh list
 
 set -e
 
-# Configuration
+# Configuration file path
+CONFIG_FILE="$HOME/.proxy-script-config"
+
+# Default configuration (will be overridden by setup)
 NGINX_CONF="/opt/homebrew/etc/nginx/nginx.conf"
 HOSTS_FILE="/private/etc/hosts"
 LOCAL_PORT="8004"
@@ -41,6 +45,122 @@ print_error() {
 
 print_info() {
     echo -e "${BLUE}[INFO]${NC} $1"
+}
+
+# Function to load configuration
+load_config() {
+    if [[ -f "$CONFIG_FILE" ]]; then
+        source "$CONFIG_FILE"
+        return 0
+    else
+        return 1
+    fi
+}
+
+# Function to save configuration
+save_config() {
+    cat > "$CONFIG_FILE" << CONFIG_EOF
+NGINX_CONF="$NGINX_CONF"
+HOSTS_FILE="$HOSTS_FILE"
+LOCAL_PORT="$LOCAL_PORT"
+BACKUP_DIR="$BACKUP_DIR"
+NGINX_BIN="$NGINX_BIN"
+CONFIG_EOF
+}
+
+# Function to setup configuration
+setup_config() {
+    print_info "Setting up proxy script configuration..."
+    echo ""
+    
+    # Check if config already exists
+    if [[ -f "$CONFIG_FILE" ]]; then
+        print_warning "Configuration already exists at $CONFIG_FILE"
+        echo -n "Do you want to reconfigure? (y/N): "
+        read -r reconfigure
+        if [[ ! "$reconfigure" =~ ^[Yy]$ ]]; then
+            print_info "Keeping existing configuration."
+            return 0
+        fi
+    fi
+    
+    echo ""
+    print_info "Please provide the paths for your nginx and hosts files:"
+    echo ""
+    
+    # Get nginx config path
+    echo -n "Nginx config file path [$NGINX_CONF]: "
+    read -r nginx_input
+    if [[ -n "$nginx_input" ]]; then
+        NGINX_CONF="$nginx_input"
+    fi
+    
+    # Validate nginx config exists
+    if [[ ! -f "$NGINX_CONF" ]]; then
+        print_error "Nginx config file not found: $NGINX_CONF"
+        echo -n "Do you want to continue anyway? (y/N): "
+        read -r continue_anyway
+        if [[ ! "$continue_anyway" =~ ^[Yy]$ ]]; then
+            print_error "Setup cancelled."
+            exit 1
+        fi
+    fi
+    
+    # Get hosts file path
+    echo -n "Hosts file path [$HOSTS_FILE]: "
+    read -r hosts_input
+    if [[ -n "$hosts_input" ]]; then
+        HOSTS_FILE="$hosts_input"
+    fi
+    
+    # Validate hosts file exists
+    if [[ ! -f "$HOSTS_FILE" ]]; then
+        print_error "Hosts file not found: $HOSTS_FILE"
+        echo -n "Do you want to continue anyway? (y/N): "
+        read -r continue_anyway
+        if [[ ! "$continue_anyway" =~ ^[Yy]$ ]]; then
+            print_error "Setup cancelled."
+            exit 1
+        fi
+    fi
+    
+    # Get nginx binary path
+    echo -n "Nginx binary path [$NGINX_BIN]: "
+    read -r nginx_bin_input
+    if [[ -n "$nginx_bin_input" ]]; then
+        NGINX_BIN="$nginx_bin_input"
+    fi
+    
+    # Validate nginx binary exists
+    if [[ ! -f "$NGINX_BIN" ]]; then
+        print_warning "Nginx binary not found: $NGINX_BIN"
+        echo -n "Do you want to continue anyway? (y/N): "
+        read -r continue_anyway
+        if [[ ! "$continue_anyway" =~ ^[Yy]$ ]]; then
+            print_error "Setup cancelled."
+            exit 1
+        fi
+    fi
+    
+    # Get local port
+    echo -n "Default local port [$LOCAL_PORT]: "
+    read -r port_input
+    if [[ -n "$port_input" ]]; then
+        LOCAL_PORT="$port_input"
+    fi
+    
+    # Save configuration
+    save_config
+    
+    echo ""
+    print_status "Configuration saved successfully!"
+    print_info "Nginx config: $NGINX_CONF"
+    print_info "Hosts file: $HOSTS_FILE"
+    print_info "Nginx binary: $NGINX_BIN"
+    print_info "Default port: $LOCAL_PORT"
+    print_info "Backup directory: $BACKUP_DIR"
+    echo ""
+    print_status "Setup complete! You can now use add, remove, and list commands."
 }
 
 # Function to validate URL
@@ -246,14 +366,16 @@ reload_nginx() {
 
 # Function to show usage
 show_usage() {
-    echo "Usage: $0 <action> <url> [port]"
+    echo "Usage: $0 <action> [url] [port]"
     echo ""
     echo "Actions:"
+    echo "  setup               - Configure nginx and hosts file paths (run this first)"
     echo "  add <url> [port]    - Add reverse proxy entry (default port: $LOCAL_PORT)"
     echo "  remove <url>        - Remove reverse proxy entry"
     echo "  list                - List current entries"
     echo ""
     echo "Examples:"
+    echo "  $0 setup"
     echo "  $0 add zerodha-staging.smallcase.com"
     echo "  $0 add axisdirect-staging.smallcase.com 8005"
     echo "  $0 remove zerodha-staging.smallcase.com"
@@ -265,6 +387,20 @@ main() {
     local action="$1"
     local url="$2"
     local port="$3"
+    
+    # Handle setup command first
+    if [[ "$action" == "setup" ]]; then
+        setup_config
+        return 0
+    fi
+    
+    # Load configuration for other commands
+    if ! load_config; then
+        print_error "Configuration not found. Please run setup first:"
+        echo ""
+        print_info "$0 setup"
+        exit 1
+    fi
     
     case "$action" in
         "add")
