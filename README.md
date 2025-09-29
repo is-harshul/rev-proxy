@@ -4,7 +4,7 @@ This script automates the process of adding and removing reverse proxy entries f
 
 ## 📁 Files Created
 
-- `add-proxy.sh` - Main script with full functionality ✅ **WORKING**
+- `rev-proxy.sh` - Main script with full functionality ✅ **WORKING**
 - `README.md` - This documentation
 
 ## ⚡ Quick Start
@@ -13,7 +13,7 @@ This script automates the process of adding and removing reverse proxy entries f
 Before using the script, you need to configure the paths to your nginx and hosts files:
 
 ```bash
-./add-proxy.sh setup
+./rev-proxy.sh setup
 ```
 
 This will prompt you for:
@@ -25,34 +25,34 @@ This will prompt you for:
 The configuration is saved to `~/.proxy-script-config` and will be used for all future operations.
 
 ### Using the Alias (Recommended)
-The alias `add-proxy.sh` is already added to your `.zshrc`:
+The alias `rev-proxy.sh` is already added to your `.zshrc`:
 
 ```bash
 # Setup (first time only)
-add-proxy.sh setup
+rev-proxy.sh setup
 
 # Add a staging URL
-add-proxy.sh add harshulkansal.staging.com
+rev-proxy.sh add harshulkansal.staging.com
 
 # Add with custom port
-add-proxy.sh add hk-staging.com 8005
+rev-proxy.sh add hk-staging.com 8005
 
 # Remove a URL
-add-proxy.sh remove harshulkansal.staging.com
+rev-proxy.sh remove harshulkansal.staging.com
 
 # List all entries
-add-proxy.sh list
+rev-proxy.sh list
 ```
 
 ### Direct Usage
 ```bash
 # Setup (first time only)
-./add-proxy.sh setup
+./rev-proxy.sh setup
 
 # Add/remove/list
-./add-proxy.sh add harshulkansal.staging.com
-./add-proxy.sh remove harshulkansal.staging.com
-./add-proxy.sh list
+./rev-proxy.sh add harshulkansal.staging.com
+./rev-proxy.sh remove harshulkansal.staging.com
+./rev-proxy.sh list
 ```
 
 ## ✨ Features
@@ -103,7 +103,7 @@ add-proxy.sh list
 
 - **Configuration**: `~/.proxy-script-config`
 - **Backups**: `~/.proxy-backups/` with timestamps
-- **Script**: `~/addProxyScript/add-proxy.sh`
+- **Script**: `~/addProxyScript/rev-proxy.sh`
 
 ## ⚙️ Configuration
 
@@ -120,19 +120,19 @@ NGINX_BIN="/opt/homebrew/bin/nginx"
 
 ```bash
 # First time setup
-add-proxy.sh setup
+rev-proxy.sh setup
 
 # Add a staging URL (defaults to port 8004)
-add-proxy.sh add harshulkansal.staging.com
+rev-proxy.sh add harshulkansal.staging.com
 
 # Add with custom port
-add-proxy.sh add hk.staging.com 8005
+rev-proxy.sh add hk.staging.com 8005
 
 # Remove a URL
-add-proxy.sh remove harshulkansal.staging.com
+rev-proxy.sh remove harshulkansal.staging.com
 
 # List all entries
-add-proxy.sh list
+rev-proxy.sh list
 ```
 
 ## 🛠️ Troubleshooting
@@ -140,7 +140,7 @@ add-proxy.sh list
 ### Configuration Issues
 If you need to reconfigure the paths:
 ```bash
-add-proxy.sh setup
+rev-proxy.sh setup
 ```
 
 ### Permission Issues
@@ -175,10 +175,10 @@ The script is now **100% working** with interactive setup! You can start using i
 
 ```bash
 # First time setup
-add-proxy.sh setup
+rev-proxy.sh setup
 
 # Then use normally
-add-proxy.sh add your-staging-url.com
+rev-proxy.sh add your-staging-url.com
 ```
 
 Enjoy your automated reverse proxy management! 🚀

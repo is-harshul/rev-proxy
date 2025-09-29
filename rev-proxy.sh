@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Script to add/remove reverse proxy entries for staging URLs
-# Usage: ./add-proxy.sh <action> <url> [port]
+# Usage: ./rev-proxy.sh <action> <url> [port]
 # Actions: setup, add, remove, list
-# Example: ./add-proxy.sh setup
-# Example: ./add-proxy.sh add zerodha-staging.smallcase.com
-# Example: ./add-proxy.sh remove zerodha-staging.smallcase.com
-# Example: ./add-proxy.sh list
+# Example: ./rev-proxy.sh setup
+# Example: ./rev-proxy.sh add zerodha-staging.smallcase.com
+# Example: ./rev-proxy.sh remove zerodha-staging.smallcase.com
+# Example: ./rev-proxy.sh list
 
 set -e
 
