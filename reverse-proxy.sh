@@ -11,7 +11,7 @@
 set -e
 
 # Configuration file path
-CONFIG_FILE="$HOME/.proxy-script-config"
+CONFIG_FILE="$HOME/.reverse-proxy-script-config"
 
 # Default configuration (will be overridden by setup)
 NGINX_CONF="/opt/homebrew/etc/nginx/nginx.conf"

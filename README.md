@@ -4,7 +4,7 @@ This script automates the process of adding and removing reverse proxy entries f
 
 ## 📁 Files Created
 
-- `rev-proxy.sh` - Main script with full functionality ✅ **WORKING**
+- `reverse-proxy.sh` - Main script with full functionality ✅ **WORKING**
 - `README.md` - This documentation
 
 ## ⚡ Quick Start
@@ -13,7 +13,7 @@ This script automates the process of adding and removing reverse proxy entries f
 Before using the script, you need to configure the paths to your nginx and hosts files:
 
 ```bash
-./rev-proxy.sh setup
+./reverse-proxy.sh setup
 ```
 
 This will prompt you for:
@@ -22,37 +22,37 @@ This will prompt you for:
 - Nginx binary path (default: `/opt/homebrew/bin/nginx`)
 - Default local port (default: `8004`)
 
-The configuration is saved to `~/.proxy-script-config` and will be used for all future operations.
+The configuration is saved to `~/.reverse-proxy-script-config` and will be used for all future operations.
 
 ### Using the Alias (Recommended)
-The alias `rev-proxy.sh` is already added to your `.zshrc`:
+The alias `reverse-proxy.sh` is already added to your `.zshrc`:
 
 ```bash
 # Setup (first time only)
-rev-proxy.sh setup
+reverse-proxy.sh setup
 
 # Add a staging URL
-rev-proxy.sh add harshulkansal.staging.com
+reverse-proxy.sh add harshulkansal.staging.com
 
 # Add with custom port
-rev-proxy.sh add hk-staging.com 8005
+reverse-proxy.sh add hk-staging.com 8005
 
 # Remove a URL
-rev-proxy.sh remove harshulkansal.staging.com
+reverse-proxy.sh remove harshulkansal.staging.com
 
 # List all entries
-rev-proxy.sh list
+reverse-proxy.sh list
 ```
 
 ### Direct Usage
 ```bash
 # Setup (first time only)
-./rev-proxy.sh setup
+./reverse-proxy.sh setup
 
 # Add/remove/list
-./rev-proxy.sh add harshulkansal.staging.com
-./rev-proxy.sh remove harshulkansal.staging.com
-./rev-proxy.sh list
+./reverse-proxy.sh add harshulkansal.staging.com
+./reverse-proxy.sh remove harshulkansal.staging.com
+./reverse-proxy.sh list
 ```
 
 ## ✨ Features
@@ -76,7 +76,7 @@ rev-proxy.sh list
 3. ✅ Prompts for nginx binary path
 4. ✅ Prompts for default port
 5. ✅ Validates file existence
-6. ✅ Saves configuration to `~/.proxy-script-config`
+6. ✅ Saves configuration to `~/.reverse-proxy-script-config`
 
 ### When Adding a URL:
 1. ✅ Loads saved configuration
@@ -101,13 +101,13 @@ rev-proxy.sh list
 
 ## 📂 Files and Directories
 
-- **Configuration**: `~/.proxy-script-config`
+- **Configuration**: `~/.reverse-proxy-script-config`
 - **Backups**: `~/.proxy-backups/` with timestamps
-- **Script**: `~/addProxyScript/rev-proxy.sh`
+- **Script**: `~/addProxyScript/reverse-proxy.sh`
 
 ## ⚙️ Configuration
 
-The script saves your configuration to `~/.proxy-script-config`:
+The script saves your configuration to `~/.reverse-proxy-script-config`:
 ```bash
 NGINX_CONF="/opt/homebrew/etc/nginx/nginx.conf"
 HOSTS_FILE="/private/etc/hosts"
@@ -120,19 +120,19 @@ NGINX_BIN="/opt/homebrew/bin/nginx"
 
 ```bash
 # First time setup
-rev-proxy.sh setup
+reverse-proxy.sh setup
 
 # Add a staging URL (defaults to port 8004)
-rev-proxy.sh add harshulkansal.staging.com
+reverse-proxy.sh add harshulkansal.staging.com
 
 # Add with custom port
-rev-proxy.sh add hk.staging.com 8005
+reverse-proxy.sh add hk.staging.com 8005
 
 # Remove a URL
-rev-proxy.sh remove harshulkansal.staging.com
+reverse-proxy.sh remove harshulkansal.staging.com
 
 # List all entries
-rev-proxy.sh list
+reverse-proxy.sh list
 ```
 
 ## 🛠️ Troubleshooting
@@ -140,7 +140,7 @@ rev-proxy.sh list
 ### Configuration Issues
 If you need to reconfigure the paths:
 ```bash
-rev-proxy.sh setup
+reverse-proxy.sh setup
 ```
 
 ### Permission Issues
@@ -175,10 +175,10 @@ The script is now **100% working** with interactive setup! You can start using i
 
 ```bash
 # First time setup
-rev-proxy.sh setup
+reverse-proxy.sh setup
 
 # Then use normally
-rev-proxy.sh add your-staging-url.com
+reverse-proxy.sh add your-staging-url.com
 ```
 
 Enjoy your automated reverse proxy management! 🚀
