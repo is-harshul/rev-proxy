@@ -1,0 +1,37 @@
+# Source files
+src/
+*.ts
+!*.d.ts
+
+# Development files
+.github/
+.eslintrc.js
+tsconfig.json
+jest.config.js
+
+# Test files
+__tests__/
+*.test.ts
+*.spec.ts
+
+# Development dependencies
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment files
+.env*
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore

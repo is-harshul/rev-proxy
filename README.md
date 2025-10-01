@@ -1,19 +1,39 @@
-# 🚀 Reverse Proxy Management Script
+# 🚀 Reverse Proxy Manager
 
-This script automates the process of adding and removing reverse proxy entries for staging URLs in your nginx configuration and hosts file.
+[![npm version](https://badge.fury.io/js/reverse-proxy-manager.svg)](https://badge.fury.io/js/reverse-proxy-manager)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
-## 📁 Files Created
+A powerful, type-safe CLI tool for managing nginx reverse proxy entries and hosts file modifications. Perfect for developers who need to quickly set up staging environments and local development proxies.
 
-- `reverse-proxy.sh` - Main script with full functionality ✅ **WORKING**
-- `README.md` - This documentation
+## ✨ Features
 
-## ⚡ Quick Start
+- 🎯 **One-line commands** - Add/remove reverse proxy entries instantly
+- 🔧 **Interactive setup** - Guided configuration for nginx and hosts files
+- 💾 **Automatic backups** - Creates timestamped backups before any changes
+- ✅ **Nginx validation** - Tests configuration before applying changes
+- 🎨 **Beautiful CLI** - Colored output and intuitive interface
+- 🔒 **Type-safe** - Built with TypeScript for reliability
+- 🛡️ **Safe operations** - Prevents duplicates and validates inputs
+- 📦 **Zero dependencies** - Lightweight and fast
 
-### First Time Setup
-Before using the script, you need to configure the paths to your nginx and hosts files:
+## 🚀 Quick Start
+
+### Installation
 
 ```bash
-./reverse-proxy.sh setup
+# Global installation (recommended)
+npm install -g reverse-proxy-manager
+
+# Or use npx (no installation required)
+npx reverse-proxy-manager setup
+```
+
+### First Time Setup
+
+```bash
+# Configure the tool
+reverse-proxy-manager setup
 ```
 
 This will prompt you for:
@@ -22,163 +42,166 @@ This will prompt you for:
 - Nginx binary path (default: `/opt/homebrew/bin/nginx`)
 - Default local port (default: `8004`)
 
-The configuration is saved to `~/.reverse-proxy-script-config` and will be used for all future operations.
-
-### Using the Alias (Recommended)
-The alias `reverse-proxy.sh` is already added to your `.zshrc`:
+### Usage
 
 ```bash
-# Setup (first time only)
-reverse-proxy.sh setup
-
-# Add a staging URL
-reverse-proxy.sh add harshulkansal.staging.com
+# Add a reverse proxy entry
+reverse-proxy-manager add example.staging.com
 
 # Add with custom port
-reverse-proxy.sh add hk-staging.com 8005
+reverse-proxy-manager add example.staging.com --port 3000
 
-# Remove a URL
-reverse-proxy.sh remove harshulkansal.staging.com
+# Remove an entry
+reverse-proxy-manager remove example.staging.com
 
 # List all entries
-reverse-proxy.sh list
+reverse-proxy-manager list
+
+# Check status
+reverse-proxy-manager status
 ```
 
-### Direct Usage
-```bash
-# Setup (first time only)
-./reverse-proxy.sh setup
+## 📋 Commands
 
-# Add/remove/list
-./reverse-proxy.sh add harshulkansal.staging.com
-./reverse-proxy.sh remove harshulkansal.staging.com
-./reverse-proxy.sh list
-```
+| Command | Description | Options |
+|---------|-------------|---------|
+| `setup` | Configure the reverse proxy manager | - |
+| `add <url>` | Add a reverse proxy entry | `-p, --port <port>` |
+| `remove <url>` | Remove a reverse proxy entry | - |
+| `list` | List all current entries | - |
+| `status` | Check configuration status | - |
 
-## ✨ Features
-
-- ✅ **One-line commands** - Exactly what you requested!
-- ✅ **Interactive setup** - Prompts for nginx and hosts file paths
-- ✅ **Configuration persistence** - Saves settings for future use
-- ✅ **Automatic backups** - Creates timestamped backups before changes
-- ✅ **URL validation** - Prevents invalid URLs
-- ✅ **Duplicate prevention** - Won't add existing entries
-- ✅ **Nginx auto-reload** - Tests config and reloads nginx
-- ✅ **Colored output** - Easy to read status messages
-- ✅ **Error handling** - Comprehensive error checking
-- ✅ **Safe operations** - Tests nginx configuration before reloading
-
-## 🔧 What the Script Does
-
-### Setup Command:
-1. ✅ Prompts for nginx config file path
-2. ✅ Prompts for hosts file path
-3. ✅ Prompts for nginx binary path
-4. ✅ Prompts for default port
-5. ✅ Validates file existence
-6. ✅ Saves configuration to `~/.reverse-proxy-script-config`
+## 🔧 What It Does
 
 ### When Adding a URL:
-1. ✅ Loads saved configuration
-2. ✅ Validates the URL format
-3. ✅ Creates backups of both nginx.conf and hosts file
+1. ✅ Validates the URL format and port
+2. ✅ Checks for existing entries to prevent duplicates
+3. ✅ Creates timestamped backups of nginx.conf and hosts file
 4. ✅ Adds nginx server block with SSL configuration
 5. ✅ Adds hosts entry (127.0.0.1 <url>)
-6. ✅ Tests nginx configuration
+6. ✅ Tests nginx configuration syntax
 7. ✅ Reloads nginx if test passes
 
 ### When Removing a URL:
-1. ✅ Loads saved configuration
-2. ✅ Creates backups of both files
-3. ✅ Removes the entire nginx server block for the URL
-4. ✅ Removes the hosts entry
-5. ✅ Tests and reloads nginx
+1. ✅ Creates backups before making changes
+2. ✅ Removes the entire nginx server block for the URL
+3. ✅ Removes the hosts entry
+4. ✅ Tests and reloads nginx
 
-### When Listing:
-1. ✅ Loads saved configuration
-2. ✅ Shows all current nginx proxy entries
-3. ✅ Shows all current hosts entries
+## 📁 Files and Directories
 
-## 📂 Files and Directories
-
-- **Configuration**: `~/.reverse-proxy-script-config`
+- **Configuration**: `~/.reverse-proxy-manager-config`
 - **Backups**: `~/.proxy-backups/` with timestamps
-- **Script**: `~/addProxyScript/reverse-proxy.sh`
+- **NPM Package**: `reverse-proxy-manager`
 
-## ⚙️ Configuration
+## 🛠️ Development
 
-The script saves your configuration to `~/.reverse-proxy-script-config`:
-```bash
-NGINX_CONF="/opt/homebrew/etc/nginx/nginx.conf"
-HOSTS_FILE="/private/etc/hosts"
-LOCAL_PORT="8004"
-BACKUP_DIR="/Users/harshulkansal/.proxy-backups"
-NGINX_BIN="/opt/homebrew/bin/nginx"
-```
+### Prerequisites
 
-## 🎯 Examples
+- Node.js 16+ 
+- TypeScript 4.5+
+- npm or yarn
+
+### Setup Development Environment
 
 ```bash
-# First time setup
-reverse-proxy.sh setup
+# Clone the repository
+git clone https://github.com/harshulkansal/reverse-proxy-manager.git
+cd reverse-proxy-manager
 
-# Add a staging URL (defaults to port 8004)
-reverse-proxy.sh add harshulkansal.staging.com
+# Install dependencies
+npm install
 
-# Add with custom port
-reverse-proxy.sh add hk.staging.com 8005
+# Build the project
+npm run build
 
-# Remove a URL
-reverse-proxy.sh remove harshulkansal.staging.com
+# Run tests
+npm test
 
-# List all entries
-reverse-proxy.sh list
+# Run linting
+npm run lint
 ```
+
+### Available Scripts
+
+```bash
+npm run build      # Compile TypeScript
+npm run dev        # Watch mode compilation
+npm test           # Run tests
+npm run lint       # Run ESLint
+npm run lint:fix   # Fix ESLint issues
+npm run clean      # Clean build directory
+```
+
+## �� Safety Features
+
+- ✅ **Automatic backups** - Every operation creates a backup
+- ✅ **Configuration validation** - Tests nginx config before applying
+- ✅ **Duplicate prevention** - Won't add existing entries
+- ✅ **Input validation** - Validates URLs and ports
+- ✅ **Error handling** - Comprehensive error checking and recovery
+- ✅ **Rollback capability** - Restores from backup if nginx test fails
+
+## 🎯 Use Cases
+
+- **Staging environments** - Quickly proxy staging URLs to local development
+- **Microservices** - Proxy different services to different ports
+- **API development** - Test API endpoints with custom domains
+- **Frontend development** - Proxy frontend apps with custom domains
+- **Local testing** - Test SSL certificates and domain-specific features
 
 ## 🛠️ Troubleshooting
 
-### Configuration Issues
-If you need to reconfigure the paths:
-```bash
-reverse-proxy.sh setup
-```
-
 ### Permission Issues
-If you get permission errors, make sure you have write access to the nginx config file:
+
+If you get permission errors, ensure you have write access to the nginx config file:
+
 ```bash
 sudo chown $(whoami) /opt/homebrew/etc/nginx/nginx.conf
 ```
 
 ### Nginx Test Fails
-If nginx configuration test fails, check the syntax in your nginx.conf file. The script will not reload nginx if the test fails.
+
+If nginx configuration test fails, check your nginx.conf syntax. The tool will not reload nginx if the test fails.
 
 ### Restore from Backup
-If something goes wrong, you can restore from backup:
+
+If something goes wrong, restore from backup:
+
 ```bash
 cp ~/.proxy-backups/nginx_YYYYMMDD_HHMMSS.conf /opt/homebrew/etc/nginx/nginx.conf
 sudo cp ~/.proxy-backups/hosts_YYYYMMDD_HHMMSS /private/etc/hosts
 sudo /opt/homebrew/bin/nginx -s reload
 ```
 
-## 🔒 Safety Notes
+## 🤝 Contributing
 
-- ✅ The script always creates backups before making changes
-- ✅ Nginx configuration is tested before reloading
-- ✅ The script checks for existing entries to prevent duplicates
-- ✅ All operations are logged with colored output for easy tracking
-- ✅ Configuration is validated during setup
-- ✅ Uses proper nginx binary path for macOS Homebrew installations
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 🎉 Success!
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-The script is now **100% working** with interactive setup! You can start using it immediately:
+## 📄 License
 
-```bash
-# First time setup
-reverse-proxy.sh setup
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-# Then use normally
-reverse-proxy.sh add your-staging-url.com
-```
+## 🙏 Acknowledgments
 
-Enjoy your automated reverse proxy management! 🚀
+- Built with [Commander.js](https://github.com/tj/commander.js) for CLI interface
+- Uses [Chalk](https://github.com/chalk/chalk) for beautiful terminal output
+- Powered by [Inquirer.js](https://github.com/SBoudrias/Inquirer.js) for interactive prompts
+
+## 📞 Support
+
+If you encounter any issues or have questions, please:
+
+1. Check the [troubleshooting section](#🛠️-troubleshooting)
+2. Search existing [issues](https://github.com/is-harshul/reverse-proxy-manager/issues)
+3. Create a new issue with detailed information
+
+---
+
+Made with ❤️ by [Harshul Kansal](https://github.com/is-harshul)

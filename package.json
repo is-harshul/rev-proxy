@@ -1,0 +1,69 @@
+{
+  "name": "reverse-proxy-manager",
+  "version": "1.0.0",
+  "description": "A powerful CLI tool for managing nginx reverse proxy entries and hosts file modifications",
+  "main": "dist/index.js",
+  "bin": {
+    "reverse-proxy-manager": "dist/cli.js",
+    "rproxy": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/cli.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test && npm run build",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "nginx",
+    "reverse-proxy",
+    "proxy",
+    "hosts",
+    "staging",
+    "development",
+    "cli",
+    "devops",
+    "automation",
+    "typescript"
+  ],
+  "author": "Harshul Kansal",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "dependencies": {
+    "commander": "^11.1.0",
+    "chalk": "^4.1.2",
+    "inquirer": "^8.2.6",
+    "fs-extra": "^11.1.1",
+    "yaml": "^2.3.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/fs-extra": "^11.0.4",
+    "@types/inquirer": "^9.0.7",
+    "@types/jest": "^29.5.8",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "eslint": "^8.54.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.3.2"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": ["**/__tests__/**/*.test.ts"]
+  }
+}
