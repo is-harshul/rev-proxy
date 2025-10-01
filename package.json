@@ -1,6 +1,6 @@
 {
   "name": "reverse-proxy-manager",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A powerful CLI tool for managing nginx reverse proxy entries and hosts file modifications",
   "main": "dist/index.js",
   "bin": {
@@ -64,6 +64,8 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
-    "testMatch": ["**/__tests__/**/*.test.ts"]
+    "testMatch": [
+      "**/__tests__/**/*.test.ts"
+    ]
   }
 }
